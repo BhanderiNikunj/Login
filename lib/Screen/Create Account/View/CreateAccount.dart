@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_form/Screen/WelCome/Provider/CreateScreenProvider.dart';
+import 'package:login_form/Utiles/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -10,11 +10,11 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  CreateScreenProvider? loginScreenProvidertrue,loginScreenProviderfalse;
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    loginScreenProviderfalse = Provider.of<CreateScreenProvider>(context,listen: false);
-    loginScreenProvidertrue = Provider.of<CreateScreenProvider>(context,listen: true);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -67,8 +67,8 @@ class _CreateAccountState extends State<CreateAccount> {
                       height: 150,
                       width: 150,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white70
+                          shape: BoxShape.circle,
+                          color: Colors.white70
                       ),
                       child: Image.asset(
                         "Assets/Images/images.png",
@@ -94,6 +94,7 @@ class _CreateAccountState extends State<CreateAccount> {
               height: 70,
               width: 400,
               child: TextField(
+                controller: txtEmail,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(),
                     label: Text(
@@ -110,6 +111,7 @@ class _CreateAccountState extends State<CreateAccount> {
               height: 70,
               width: 400,
               child: TextField(
+                controller: txtPassword,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(),
                     label: Text(
@@ -123,24 +125,33 @@ class _CreateAccountState extends State<CreateAccount> {
               ),
             ),
             SizedBox(height: 30),
-            Container(
-              height: 50,
-              width: 400,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.blue.shade900,
-                    Colors.blue,
-                  ],
+            InkWell(
+              onTap: () {
+                var email = txtEmail.text;
+                var password = txtPassword.text;
+                Shr shr = Shr();
+                shr.CreatData(email, password);
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 50,
+                width: 400,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.blue.shade900,
+                      Colors.blue,
+                    ],
+                  ),
                 ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "Sign Up",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                alignment: Alignment.center,
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -153,20 +164,20 @@ class _CreateAccountState extends State<CreateAccount> {
                 },
                 child: RichText(
                   text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Alredy have account?",
-                        style: TextStyle(
-                          color: Colors.black
-                        )
-                      ),
-                      TextSpan(
-                        text: "Sign In",
-                        style: TextStyle(
-                          color: Colors.blue.shade900,
-                        )
-                      ),
-                    ]
+                      children: [
+                        TextSpan(
+                            text: "Alredy have account?",
+                            style: TextStyle(
+                                color: Colors.black
+                            )
+                        ),
+                        TextSpan(
+                            text: "Sign In",
+                            style: TextStyle(
+                              color: Colors.blue.shade900,
+                            )
+                        ),
+                      ]
                   ),
                 ),
               ),

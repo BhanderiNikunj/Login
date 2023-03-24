@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_form/Screen/Login/Provider/LoginScreenProvider.dart';
+import 'package:login_form/Utiles/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,11 +10,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginScreenProvider? loginScreenProvidertrue,loginScreenProviderfalse;
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    loginScreenProviderfalse = Provider.of<LoginScreenProvider>(context,listen: false);
-    loginScreenProvidertrue = Provider.of<LoginScreenProvider>(context,listen: true);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 70,
               width: 400,
               child: TextField(
-                controller: loginScreenProviderfalse!.txtusername,
+                controller: txtEmail,
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(),
                   label: Text(
@@ -100,38 +100,61 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 70,
               width: 400,
               child: TextField(
-                controller: loginScreenProviderfalse!.txtpassword,
+                controller: txtPassword,
                 decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(),
-                    label: Text(
-                      "Enter Password",
-                    ),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5))),
+                  enabledBorder: UnderlineInputBorder(),
+                  label: Text(
+                    "Enter Password",
+                  ),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 30),
-            Container(
-              height: 50,
-              width: 400,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.blue.shade900,
-                    Colors.blue,
-                  ],
+            InkWell(
+              onTap: () async {
+                var UserEmail = txtEmail.text;
+                var UserPassword = txtPassword.text;
+                print(UserEmail);
+                print(UserPassword);
+
+                Shr shr = Shr();
+                Map m1 = await shr.readData();
+
+                if (UserEmail == m1['g1'] && UserPassword == m1['p1']) {
+                  Navigator.pushNamed(context, 'welcome');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Invalid PassWord Or Email"),
+                    ),
+                  );
+                }
+              },
+              child: Container(
+                height: 50,
+                width: 400,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.blue.shade900,
+                      Colors.blue,
+                    ],
+                  ),
                 ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "Sign In",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                alignment: Alignment.center,
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -145,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: RichText(
                   text: TextSpan(children: [
                     TextSpan(
-                        text: "Alredy have account?",
+                        text: "Create New Account?",
                         style: TextStyle(color: Colors.black)),
                     TextSpan(
                         text: "Sign Up",
