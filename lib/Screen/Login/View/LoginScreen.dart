@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:login_form/Utiles/shared_preferences.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -120,8 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
               onTap: () async {
                 var UserEmail = txtEmail.text;
                 var UserPassword = txtPassword.text;
-                print(UserEmail);
-                print(UserPassword);
 
                 Shr shr = Shr();
                 Map m1 = await shr.readData();

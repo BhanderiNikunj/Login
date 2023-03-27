@@ -12,7 +12,6 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,8 +66,8 @@ class _CreateAccountState extends State<CreateAccount> {
                       height: 150,
                       width: 150,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white70
+                        shape: BoxShape.circle,
+                        color: Colors.white70
                       ),
                       child: Image.asset(
                         "Assets/Images/images.png",
@@ -164,20 +163,20 @@ class _CreateAccountState extends State<CreateAccount> {
                 },
                 child: RichText(
                   text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: "Alredy have account?",
-                            style: TextStyle(
-                                color: Colors.black
-                            )
-                        ),
-                        TextSpan(
-                            text: "Sign In",
-                            style: TextStyle(
-                              color: Colors.blue.shade900,
-                            )
-                        ),
-                      ]
+                    children: [
+                      TextSpan(
+                        text: "Alredy have account?",
+                        style: TextStyle(
+                          color: Colors.black
+                        )
+                      ),
+                      TextSpan(
+                        text: "Sign In",
+                        style: TextStyle(
+                          color: Colors.blue.shade900,
+                        )
+                      ),
+                    ]
                   ),
                 ),
               ),
